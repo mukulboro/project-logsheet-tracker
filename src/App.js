@@ -1,8 +1,8 @@
 import Login from "./components/login.jsx";
 
-function App() {
+function MainApp() {
   return <Login/>;
 }
 
 
-export default App;
+export default MainApp;
