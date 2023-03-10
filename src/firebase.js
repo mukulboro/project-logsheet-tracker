@@ -1,4 +1,6 @@
 import firebase from 'firebase/compat/app'
+import { getFirestore } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -10,6 +12,9 @@ const firebaseConfig = {
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
+
 let app = firebase.initializeApp(firebaseConfig);
 
 export const firebaseApp = app;
+export const db = getFirestore(app);
+

@@ -7,7 +7,6 @@ function Login() {
   const handleOnClick = (e)=>{
     e.preventDefault();
     let auth = getAuth();
-    console.log(auth);
   }
 
   return (
