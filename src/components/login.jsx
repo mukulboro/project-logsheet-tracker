@@ -1,37 +1,20 @@
-import React from 'react'
-import { useState } from 'react'
+import {React, useState} from 'react'
+import {getAuth} from "firebase/auth"
+import { firebaseAuth } from '../firebase';
 
 function Login() {
 
-  const [userName, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
   const handleOnClick = (e)=>{
     e.preventDefault();
-    alert(`USERNAME: ${userName}  PASSWORD:${password}`);
+    let auth = getAuth();
+    console.log(auth);
   }
 
   return (
     <div>
       <h1>Hello!</h1>
       <form>
-        <input 
-            type="text" 
-            placeholder='USERNAME' 
-            value={userName}
-            onChange = {(e)=>{
-              setUsername(e.target.value);
-            }}
-            />
-        <input 
-            type="password" 
-            placeholder='PASSWORD'
-            value={password}
-            onChange = {(e)=>{
-              setPassword(e.target.value);
-            }}
-            />
-        <button onClick={handleOnClick}>LOGIN</button>
+        <button onClick={handleOnClick}>LOGIN with google</button>
       </form>
     </div>
   )
