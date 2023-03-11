@@ -12,7 +12,25 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
+
   const [isCodeValid, setIsCodeValid] = useState(false);
+  const [inviteCode, setInviteCode] = useState("")
+
+  
+  const checkInviteCode = async (code)=>{
+    const q = query(
+      collection(db, "inviteCodes"),
+      where("code", "==", code)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      let res = doc.data();
+      setIsCodeValid(res.isValid);
+    });
+  }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,18 +41,6 @@ const Register = () => {
       fullName: data.get("name"),
       inviteCode: data.get("code"),
     };
-
-    const q = query(
-      collection(db, "inviteCodes"),
-      where("code", "==", formData.inviteCode)
-    );
-
-    const querySnapshot = await getDocs(q);
-
-    querySnapshot.forEach((doc) => {
-      let res = doc.data();
-      setIsCodeValid(res.isValid);
-    });
 
 
     if (isCodeValid) {
@@ -50,6 +56,8 @@ const Register = () => {
       toast.error("Invalid Invitation Code", {theme: "dark"});
     }
   };
+
+  checkInviteCode(inviteCode);
 
 
   return (
@@ -102,8 +110,10 @@ const Register = () => {
                   <TextField
                     required
                     fullWidth
-                    id="inviteCode"
-                    name="code"
+                    error = {!isCodeValid}
+                    value={inviteCode}
+                    helperText={isCodeValid? "" : "Invalid Invitation Code"}
+                    onChange={(e)=>setInviteCode(e.target.value)}
                     label="Invitation Code"
                     color="secondary"
                   />
